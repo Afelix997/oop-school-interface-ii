@@ -1,21 +1,22 @@
+from .person import Person 
 import csv
-import os.path
-from classes.person import Person
 
 class Student(Person):
-
-    def __init__(self, name, age, password, role, school_id):
-        super().__init__(name, age, password, role)
+    def __init__(self, name, age, role, password,school_id):
+        Person.__init__(self, name, age, password, role)
+        self.age = age
+        self.password = password
+        self.role = role
         self.school_id = school_id
 
-    @classmethod
-    def objects(cls):
-        students = []
-        my_path = os.path.abspath(os.path.dirname(__file__))
-        path = os.path.join(my_path, "../data/students.csv")
-        with open(path) as csvfile:
+    def all_students():
+        student_list=[]
+        with open('/mnt/c/Users/angel/OneDrive/Desktop/Code-Platoon/homework/wk_2/day_4/oop-school-interface-i/data/students.csv', newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                students.append(Student(**dict(row)))
-        return students
+                student_list.append(row)
+        return student_list 
+    def __str__(self):
+        return f"{self.name.upper()}\n------\nAge: {self.age}\nID: {self.school_id}"
+        
 
